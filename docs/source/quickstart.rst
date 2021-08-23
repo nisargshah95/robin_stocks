@@ -67,7 +67,7 @@ Building Profile and User Data
 The two most useful functions are ``build_holdings`` and ``build_user_profile``. These condense information from several
 functions into a single dictionary. If you wanted to view all your stock holdings then type:
 
->>> my_stocks = robin_stocks.build_holdings()
+>>> my_stocks = r.account.build_holdings()
 >>> for key,value in my_stocks.items():
 >>>     print(key,value)
 
@@ -78,13 +78,13 @@ Trading stocks, options, and crypto-currencies is one of the most powerful featu
 Robinhood supports it. Here is a list of possible trades you can make
 
 >>> #Buy 10 shares of Apple at market price
->>> robin_stocks.order_buy_market('AAPL',10)
+>>> r.orders.order_buy_market('AAPL',10)
 >>> #Sell half a Bitcoin is price reaches 10,000
->>> robin_stocks.order_sell_crypto_limit('BTC',0.5,10000)
+>>> r.orders.order_sell_crypto_limit('BTC',0.5,10000)
 >>> #Buy $500 worth of Bitcoin
->>> robin_stocks.order_buy_crypto_by_price('BTC',500)
+>>> r.orders.order_buy_crypto_by_price('BTC',500)
 >>> #Buy 5 $150 May 1st, 2020 SPY puts if the price per contract is $1.00. Good until cancelled.
->>> robin_stocks.order_buy_option_limit('open','debit',1.00,'SPY',5,'2020-05-01',150,'put','gtc')
+>>> r.orders.order_buy_option_limit('open','debit',1.00,'SPY',5,'2020-05-01',150,'put','gtc')
 
 Now let's try a slightly more complex example. Let's say you wanted to sell half your Tesla stock if it fell to 200.00.
 To do this you would type
@@ -97,7 +97,7 @@ To do this you would type
 >>>     item['symbol'] = robin_stocks.get_symbol_by_url(item['instrument'])
 >>> TSLAData = [item for item in positions_data if item['symbol'] == 'TSLA']
 >>> sellQuantity = float(TSLAData['quantity'])//2.0
->>> robin_stocks.order_sell_limit('TSLA',sellQuantity,200.00)
+>>> r.orders.order_sell_limit('TSLA',sellQuantity,200.00)
 
 Also be aware that all the order functions default to 'gtc' or 'good until cancelled'. To change this, pass one of the following in as
 the last parameter in the function: 'gfd'(good for the day), 'ioc'(immediate or cancel), or 'opg'(execute at opening).
